@@ -1,11 +1,23 @@
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
+import configparser
+import os
+    
+config = configparser.ConfigParser()
+config_file_path = os.path.join(os.path.dirname(__file__), 'config.cfg')
 
+config.read(config_file_path)
+client_id = config.get('api_keys', 'client_id')
+client_secret = config.get('api_keys', 'client_secret')
+redirect_uri = config.get('api_keys', 'redirect_uri')
 
+print(client_id)
+print(client_secret)
+print(redirect_uri)
 
-sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id="2f8c3c2412754c8db4a5808c0ff6d1c7",
-                                               client_secret="cd5ca563e4484242b9f9aa5fa3ab6658",
-                                               redirect_uri="http://localhost:1234",
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id,
+                                               client_secret,
+                                               redirect_uri,
                                                scope="user-read-recently-played, user-top-read"))
 
 
@@ -26,7 +38,6 @@ def getCurrentUserTopArtists(term) :
         
     
     return topArtistSorted
-    
 
 def getCurrentUserTopTracks(term) :
     results = sp.current_user_top_tracks(limit=25, offset=0,time_range=term+'_term')
