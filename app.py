@@ -1,30 +1,44 @@
 from flask import Flask, render_template
-import spotipy_requests
+import spotipy
+from spotipy.oauth2 import SpotifyOAuth
+import spotipy_requests, cache_token
+import configparser
+import os
+    
+config = configparser.ConfigParser()
+config_file_path = os.path.join(os.path.dirname(__file__), 'config.cfg')
+
+config.read(config_file_path)
+client_id = config.get('api_keys', 'client_id')
+client_secret = config.get('api_keys', 'client_secret')
+redirect_uri = config.get('api_keys', 'redirect_uri')
+
+TOKEN_CACHE_PATH = 'token_cache.json'
+sp = cache_token.authenticate_spotify()
 
 app = Flask(__name__)
 
 # Web scraping function (example: scrape quotes from a site)
-def scrape_data_artists(term):
-    topArtistST = spotipy_requests.getCurrentUserTopArtists(term)
+def scrape_data(type, term):
+    topItems = spotipy_requests.getCurrentUserTopItems(sp,type,term)
     
-    return topArtistST
-    
-# Web scraping function (example: scrape quotes from a site)
-def scrape_data_tracks(term):
-    topTrackST = spotipy_requests.getCurrentUserTopTracks(term)
-    
-    return topTrackST
+    return topItems
 
 @app.route('/')
 def home():
-    #list1 = scrape_data_artists('short')  # Scrape data when accessing the home page
-    #list2 = scrape_data_artists('medium')
-    #list3 = scrape_data_artists('long')
-    #list4 = scrape_data_tracks('short')  # Scrape data when accessing the home page
-    #list5 = scrape_data_tracks('medium')
-    #list6 = scrape_data_tracks('long')
-    #return render_template('index.html',  list1=list1, list2=list2, list3=list3, list4=list4, list5=list5, list6=list6)
-    return render_template('index.html')
+    list1 = scrape_data('artists','short') 
+    list2 = scrape_data('artists','medium')
+    list3 = scrape_data('artists','long')
+    list4 = scrape_data('tracks','short') 
+    list5 = scrape_data('tracks','medium')
+    list6 = scrape_data('tracks','long')
+    return render_template('index.html',  list1=list1, 
+                                          list2=list2, 
+                                          list3=list3, 
+                                          list4=list4, 
+                                          list5=list5, 
+                                          list6=list6)
+    #return render_template('index.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
