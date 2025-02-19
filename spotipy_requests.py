@@ -10,6 +10,7 @@ def getCurrentUserTopItems(sp, type_of_req, term):
     else:
         results = sp.current_user_top_artists(limit=25, offset=0, time_range=term + '_term')
     topItems = results['items']
+    x = 1
     while results['next']:
         results = sp.next(results)
         topItems.extend(results['items'])
