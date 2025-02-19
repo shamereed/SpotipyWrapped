@@ -31,15 +31,20 @@ app = Flask(__name__)
 
 
 # Web scraping function (example: scrape quotes from a site)
-def scrape_data(q, type_of_req, term):
-    topItems = spotipy_requests.getCurrentUserTopItems(sp, type_of_req, term)
-
-    q.put(topItems)
+def scrape_data(type_of_req, term):
+    return spotipy_requests.getCurrentUserTopItems(sp, type_of_req, term)
 
 
 @app.route('/')
 def home():
-    threads = []
+    list1 = scrape_data('artists', 'short')
+    list2 = scrape_data('artists', 'medium')
+    list3 = scrape_data('artists', 'long')
+    list4 = scrape_data('tracks', 'short')
+    list5 = scrape_data('tracks', 'medium')
+    list6 = scrape_data('tracks', 'long')
+
+    """threads = []
     q = queue.Queue()
     thread1 = threading.Thread(target=scrape_data, args=(q, 'artists', 'short'))
     thread2 = threading.Thread(target=scrape_data, args=(q, 'artists', 'medium'))
@@ -47,18 +52,18 @@ def home():
     thread4 = threading.Thread(target=scrape_data, args=(q, 'tracks', 'short'))
     thread5 = threading.Thread(target=scrape_data, args=(q, 'tracks', 'medium'))
     thread6 = threading.Thread(target=scrape_data, args=(q, 'tracks', 'long'))
-    thread6.start()
-    thread5.start()
-    thread4.start()
-    thread3.start()
-    thread2.start()
     thread1.start()
-    threads.append(thread6)
-    threads.append(thread5)
-    threads.append(thread4)
-    threads.append(thread3)
-    threads.append(thread2)
+    thread2.start()
+    thread3.start()
+    thread4.start()
+    thread5.start()
+    thread6.start()
     threads.append(thread1)
+    threads.append(thread2)
+    threads.append(thread3)
+    threads.append(thread4)
+    threads.append(thread5)
+    threads.append(thread6)
 
     # Wait for all threads to complete
     for thread in threads:
@@ -68,7 +73,7 @@ def home():
     list3 = q.get()
     list4 = q.get()
     list5 = q.get()
-    list6 = q.get()
+    list6 = q.get()"""
 
     return render_template('index.html', list1=list1,
                            list2=list2,
