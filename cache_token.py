@@ -14,7 +14,7 @@ config.read(config_file_path)
 CLIENT_ID_CONFIG = config.get('api_keys', 'client_id')
 CLIENT_SECRET_CONFIG = config.get('api_keys', 'client_secret')
 REDIRECT_URI_CONFIG = config.get('api_keys', 'redirect_uri')
-SCOPE_CONFIG = 'user-top-read'
+SCOPE_CONFIG = 'user-library-read,user-top-read'
 
 # Token cache file path
 TOKEN_CACHE_PATH = 'token_cache.json'
@@ -58,14 +58,14 @@ def authenticate_spotify():
 
     if token_info is None:
         # If no valid token in cache, request a new token
-        sp_oauth = SpotifyOAuth(client_id=CLIENT_ID_CONFIG,
-                                client_secret=CLIENT_SECRET_CONFIG,
-                                redirect_uri=REDIRECT_URI_CONFIG,
-                                scope=SCOPE_CONFIG,
-                                open_browser=True)  # Adjust scope based on your needs
+        sp_oauth1 = SpotifyOAuth(client_id=CLIENT_ID_CONFIG,
+                                 client_secret=CLIENT_SECRET_CONFIG,
+                                 redirect_uri=REDIRECT_URI_CONFIG,
+                                 scope=SCOPE_CONFIG,
+                                 open_browser=True)  # Adjust scope based on your needs
 
         # Get the token using authorization code flow
-        token_info = sp_oauth.get_access_token(sp_oauth.get_authorize_url())
+        token_info = sp_oauth1.get_access_token(sp_oauth1.get_authorize_url())
 
         # Cache the token
         save_token_to_cache(token_info)

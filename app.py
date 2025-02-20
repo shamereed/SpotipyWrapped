@@ -4,6 +4,7 @@ from flask import Flask, render_template
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 import spotipy_requests
+import cache_token
 
 
 # Authenticate spotify account
@@ -17,10 +18,7 @@ def authenticate_sp():
     client_secret = config.get('api_keys', 'client_secret')
     redirect_uri = config.get('api_keys', 'redirect_uri')
 
-    return spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id,
-                                                     client_secret=client_secret,
-                                                     redirect_uri=redirect_uri,
-                                                     scope="user-library-read,user-top-read"))
+    return cache_token.authenticate_spotify()
 
 
 sp = authenticate_sp()
