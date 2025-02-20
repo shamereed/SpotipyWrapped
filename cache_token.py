@@ -16,8 +16,6 @@ CLIENT_SECRET_CONFIG = config.get('api_keys', 'client_secret')
 REDIRECT_URI_CONFIG = config.get('api_keys', 'redirect_uri')
 SCOPE_CONFIG = 'user-top-read'
 
-print(CLIENT_ID_CONFIG + ' ' + CLIENT_SECRET_CONFIG + ' ' + REDIRECT_URI_CONFIG)
-
 # Token cache file path
 TOKEN_CACHE_PATH = 'token_cache.json'
 
