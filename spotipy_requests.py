@@ -13,8 +13,6 @@ def getCurrentUserTopItems(sp, type_of_req, term):
         results = sp.current_user_top_artists(limit=25, offset=0, time_range=term + '_term')
     top_items = results['items']
 
-    writeResultsToJson(sp, top_items, type_of_req, term)
-
     top_items_sorted = []
 
     x = 1
@@ -28,10 +26,10 @@ def getCurrentUserTopItems(sp, type_of_req, term):
 
     elapsed_time = timer() - start
     print(elapsed_time)
-    return top_items_sorted
+    return top_items_sorted, top_items
 
 
-def writeResultsToJson(sp, top_items, type_of_req, term):
+def writeResultsToJson(top_items, type_of_req, term):
     current_datetime = datetime.datetime.now()
     current_time_str = current_datetime.strftime("%Y%m%d")
     file_path = "json/" + type_of_req + "/" + type_of_req + "_" + term + "_term" + current_time_str + ".json"

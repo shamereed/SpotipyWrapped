@@ -25,8 +25,6 @@ sp_oauth = SpotifyOAuth(client_id=CLIENT_ID_CONFIG,
                         scope=SCOPE_CONFIG,
                         open_browser=True)
 
-print(sp_oauth.get_authorize_url())
-
 
 def load_token_from_cache():
     """Load cached token from the file if it exists and is valid."""
