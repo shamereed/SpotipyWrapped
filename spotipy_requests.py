@@ -2,6 +2,7 @@ from timeit import default_timer as timer
 
 import datetime
 import json
+import persist_json
 
 
 def getCurrentUserTopItems(sp, type_of_req, term):
@@ -33,6 +34,9 @@ def writeResultsToJson(top_items, type_of_req, term):
     current_datetime = datetime.datetime.now()
     current_time_str = current_datetime.strftime("%Y%m%d")
     file_path = "json/" + type_of_req + "/" + type_of_req + "_" + term + "_term" + current_time_str + ".json"
-
     with open(file_path, "w") as json_file:
         json.dump(top_items, json_file, indent=4)
+    if type_of_req == 'tracks':
+        persist_json.persistJsonTracks(file_path, type_of_req, term)
+    else:
+        persist_json.persistJsonArtists(file_path, type_of_req, term)
