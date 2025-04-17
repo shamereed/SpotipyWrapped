@@ -57,5 +57,6 @@ def persistJson():
                            list5=list5[0],
                            list6=list6[0])
 
+
 if __name__ == '__main__':
     app.run(debug=True)
