@@ -15,9 +15,15 @@ def getTopGenres(sp, term):
 
     most_frequent = sorted(set(listOfGenres), key=listOfGenres.count, reverse=True)
     print(most_frequent)
+    most_frequent_sorted = []
+    x = 1
+    for genre in most_frequent:
+        most_frequent_sorted.append(str(x) + ". " + genre.title())
+        x = x + 1
+
     elapsed_time = timer() - start
     print(elapsed_time)
-    return most_frequent
+    return most_frequent_sorted
 
 
 def getCurrentUserTopItems(sp, type_of_req, term):
