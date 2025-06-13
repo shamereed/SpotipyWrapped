@@ -17,21 +17,33 @@ def scrape_data(type_of_req, term):
     return spotipy_requests.getCurrentUserTopItems(sp, type_of_req, term)
 
 
+def getTopGenres(term):
+    return spotipy_requests.getTopGenres(sp, term)
+
+
 @app.route('/')
 def home():
     list1 = scrape_data('artists', 'short')
     list2 = scrape_data('artists', 'medium')
     list3 = scrape_data('artists', 'long')
+
     list4 = scrape_data('tracks', 'short')
     list5 = scrape_data('tracks', 'medium')
     list6 = scrape_data('tracks', 'long')
+
+    list7 = getTopGenres('short')
+    list8 = getTopGenres('medium')
+    list9 = getTopGenres('long')
 
     return render_template('index.html', list1=list1[0],
                            list2=list2[0],
                            list3=list3[0],
                            list4=list4[0],
                            list5=list5[0],
-                           list6=list6[0])
+                           list6=list6[0],
+                           list7=list7,
+                           list8=list8,
+                           list9=list9)
 
 
 @app.route('/persist')

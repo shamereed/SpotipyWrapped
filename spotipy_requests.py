@@ -5,6 +5,21 @@ import json
 import persist_json
 
 
+def getTopGenres(sp, term):
+    start = timer()
+    listOfGenres = []
+    results = sp.current_user_top_artists(limit=50, offset=0, time_range=term + '_term')
+    for item in results['items']:
+        for genre in item['genres']:
+            listOfGenres.append(genre)
+
+    most_frequent = sorted(set(listOfGenres), key=listOfGenres.count, reverse=True)
+    print(most_frequent)
+    elapsed_time = timer() - start
+    print(elapsed_time)
+    return most_frequent
+
+
 def getCurrentUserTopItems(sp, type_of_req, term):
     start = timer()
     results = []
@@ -20,7 +35,9 @@ def getCurrentUserTopItems(sp, type_of_req, term):
     for item in top_items:
         if x < 51:
             if type_of_req == 'tracks':
-                top_items_sorted.append(str(x) + ". " + item['name'] + " - " + item['artists'][0]['name'] + " - " + item['album']['release_date'][:4])
+                top_items_sorted.append(
+                    str(x) + ". " + item['name'] + " - " + item['artists'][0]['name'] + " - " + item['album'][
+                                                                                                    'release_date'][:4])
             else:
                 top_items_sorted.append(str(x) + ". " + item['name'])
             x += 1

@@ -74,5 +74,39 @@
             </ol>
         </div>
     </div>
+    <h1>Spotify Top Genres</h1>
+    <div class="container">
+        <div class="column">
+            <h3>Short Term</h3>
+            <ol>
+                {% for item in list7 %}
+                    <li>{{ item }}</li>
+                {% else %}
+                    <li>No items in this list.</li>
+                {% endfor %}
+            </ol>
+        </div>
+        <div class="column">
+            <h3>Medium Term</h3>
+            <ol>
+                {% for item in list8 %}
+                    <li>{{ item }}</li>
+                {% else %}
+                    <li>No items in this list.</li>
+                {% endfor %}
+            </ol>
+        </div>
+        <div class="column">
+            <h3>Long Term</h3>
+            <ol>
+                {% for item in list9 %}
+                    <li>{{ item }}</li>
+                {% else %}
+                    <li>No items in this list.</li>
+                {% endfor %}
+            </ol>
+        </div>
+    </div>
+
 </body>
 </html>
