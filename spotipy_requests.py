@@ -1,5 +1,5 @@
 from timeit import default_timer as timer
-
+from collections import Counter
 import datetime
 import json
 import persist_json
@@ -8,17 +8,19 @@ import persist_json
 def getTopGenres(sp, term):
     start = timer()
     listOfGenres = []
-    results = sp.current_user_top_artists(limit=50, offset=0, time_range=term + '_term')
+    results = sp.current_user_top_artists(limit=25, offset=0, time_range=term + '_term')
     for item in results['items']:
         for genre in item['genres']:
             listOfGenres.append(genre)
 
-    most_frequent = sorted(set(listOfGenres), key=listOfGenres.count, reverse=True)
+    most_frequent = Counter(listOfGenres)
+    #most_frequent = sorted(Counter(listOfGenres), key=listOfGenres.count, reverse=True)
+    #most_frequent = sorted(set(listOfGenres), key=listOfGenres.count, reverse=True)
     print(most_frequent)
     most_frequent_sorted = []
     x = 1
     for genre in most_frequent:
-        most_frequent_sorted.append(str(x) + ". " + genre.title())
+        most_frequent_sorted.append(str(x) + ". " + genre.title() + " : " + str(most_frequent[genre]))
         x = x + 1
 
     elapsed_time = timer() - start
