@@ -14,8 +14,6 @@ def getTopGenres(sp, term):
             listOfGenres.append(genre)
 
     most_frequent = Counter(listOfGenres)
-    #most_frequent = sorted(Counter(listOfGenres), key=listOfGenres.count, reverse=True)
-    #most_frequent = sorted(set(listOfGenres), key=listOfGenres.count, reverse=True)
     print(most_frequent)
     most_frequent_sorted = []
     x = 1
